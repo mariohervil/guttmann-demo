@@ -1,0 +1,29 @@
+
+{
+    "palabras":{ 
+        
+        "semantica":[
+            ["objetos/cosas","Roca", "Gorro", "Cama", "Gancho", "Rueda", "Camión", "Escoba", "Espejo"], 
+            ["animales", "Canguro", "Ratón", "Gato", "Rinoceronte", "Gaviota", "Erizo", "Cebra", "Elefante"],
+            ["comida", "Galleta", "Calabaza", "Cebolla", "Roquefort", "Rábano", "Garbanzo", "Espagueti", "Espinaca"],
+            ["deportes", "Golf", "Gimnasia", "Ciclismo", "Críquet", "Esquí", "Escalada", "Rugby", "Rafting"]
+        ],
+
+        "empiezan_misma_letra":[
+            ["palabras_G","Gorro","Gancho","Gato","Gaviota","Galleta","Garbanzo","Golf ","Gimnasia"], 
+            ["palabras_P","Roca","Rueda","Ratón","Rinoceronte","Roquefort","Rábano","Rugby","Rafting"],
+            ["palabras_C","Cama","Camión","Canguro","Cebra","Calabaza","Cebolla","Ciclismo","Críquet"],
+            ["palabras_E","Escoba","Espejo","Erizo","Elefante","Espagueti","Espinaca","Esquí","Escalada"]
+        ],
+
+        "misma_fuente":[
+            ["Times_New_Roman", "Cama", "Gorro", "Gato", "Erizo", "Ratón", "Golf", "Escoba", "Gimnasia"], 
+            ["Lucida_Handwriting", "Ensalada", "Roca", "Canguro", "Calabaza", "Rábano", "Garbanzo", "Roquefort", "Rugby"],
+            ["STENCIL", "Rinoceronte", "Esquí", "Espinaca", "Cebra", "Rafting", "Gancho", "Camión", "Críquet"],
+            ["Courier_New", "Espejo", "Galleta", "Gaviota", "Rueda", "Elefante", "Cebolla", "Espagueti", "Ciclismo"]
+        ]
+    }
+
+}
+
+
