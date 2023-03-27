@@ -1,0 +1,196 @@
+{
+    "words": [
+        {
+            "word": "roca",
+            "semantics": "objetos/cosas",
+            "font": "DancingScript",
+            "firstLetter": "r"
+        },
+        {
+            "word": "canguro",
+            "semantics": "animales",
+            "font": "DancingScript",
+            "firstLetter": "c"
+        },
+        {
+            "word": "galleta",
+            "semantics": "comida",
+            "font": "times new roman",
+            "firstLetter": "g"
+        },
+        {
+            "word": "golf",
+            "semantics": "deportes",
+            "font": "Exo2",
+            "firstLetter": "g"
+        },
+        {
+            "word": "gorro",
+            "semantics": "objetos/cosas",
+            "font": "space mono",
+            "firstLetter": "g"
+        },
+        {
+            "word": "ratón",
+            "semantics": "animales",
+            "font": "DancingScript",
+            "firstLetter": "r"
+        },
+        {
+            "word": "cama",
+            "semantics": "objetos/cosas",
+            "font": "times new roman",
+            "firstLetter": "c"
+        },
+        {
+            "word": "escoba",
+            "semantics": "objetos/cosas",
+            "font": "Exo2",
+            "firstLetter": "e"
+        },
+        {
+            "word": "escalada",
+            "semantics": "deportes",
+            "font": "DancingScript",
+            "firstLetter": "e"
+        },
+        {
+            "word": "rinoceronte",
+            "semantics": "animales",
+            "font": "space mono",
+            "firstLetter": "r"
+        },
+        {
+            "word": "espejo",
+            "semantics": "objetos/cosas",
+            "font": "times new roman",
+            "firstLetter": "e"
+        },
+        {
+            "word": "calabaza",
+            "semantics": "comida",
+            "font": "DancingScript",
+            "firstLetter": "c"
+        },
+        {
+            "word": "gimnasia",
+            "semantics": "deportes",
+            "font": "Exo2",
+            "firstLetter": "g"
+        },
+        {
+            "word": "rueda",
+            "semantics": "objetos/cosas",
+            "font": "space mono",
+            "firstLetter": "r"
+        },
+        {
+            "word": "camión",
+            "semantics": "objetos/cosas",
+            "font": "DancingScript",
+            "firstLetter": "c"
+        },
+        {
+            "word": "erizo",
+            "semantics": "animales",
+            "font": "space mono",
+            "firstLetter": "e"
+        },
+        {
+            "word": "cebolla",
+            "semantics": "comida",
+            "font": "times new roman",
+            "firstLetter": "c"
+        },
+        {
+            "word": "gaviota",
+            "semantics": "animales",
+            "font": "Exo2",
+            "firstLetter": "g"
+        },
+        {
+            "word": "roquefort",
+            "semantics": "comida",
+            "font": "space mono",
+            "firstLetter": "r"
+        },
+        {
+            "word": "cebra",
+            "semantics": "animales",
+            "font": "Exo2",
+            "firstLetter": "c"
+        },
+        {
+            "word": "elefante",
+            "semantics": "animales",
+            "font": "space mono",
+            "firstLetter": "e"
+        },
+        {
+            "word": "espagueti",
+            "semantics": "comida",
+            "font": "Exo2",
+            "firstLetter": "e"
+        },
+        {
+            "word": "garbanzo",
+            "semantics": "comida",
+            "font": "DancingScript",
+            "firstLetter": "g"
+        },
+        {
+            "word": "rugby",
+            "semantics": "deportes",
+            "font": "times new roman",
+            "firstLetter": "r"
+        },
+        {
+            "word": "críquet",
+            "semantics": "deportes",
+            "font": "space mono",
+            "firstLetter": "c"
+        },
+        {
+            "word": "ciclismo",
+            "semantics": "deportes",
+            "font": "DancingScript",
+            "firstLetter": "c"
+        },
+        {
+            "word": "espinacas",
+            "semantics": "comida",
+            "font": "times new roman",
+            "firstLetter": "e"
+        },
+        {
+            "word": "rafting",
+            "semantics": "deportes",
+            "font": "space mono",
+            "firstLetter": "r"
+        },
+        {
+            "word": "gancho",
+            "semantics": "objetos/cosas",
+            "font": "Exo2",
+            "firstLetter": "g"
+        },
+        {
+            "word": "gato",
+            "semantics": "animales",
+            "font": "times new roman",
+            "firstLetter": "g"
+        },
+        {
+            "word": "esquí",
+            "semantics": "deportes",
+            "font": "Exo2",
+            "firstLetter": "e"
+        },
+        {
+            "word": "rábano",
+            "semantics": "comida",
+            "font": "DancingScript",
+            "firstLetter": "r"
+        }
+    ]
+}
