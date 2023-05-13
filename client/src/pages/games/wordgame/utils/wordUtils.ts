@@ -11,8 +11,6 @@ const shuffleWords = (array: TargetWord[]) => {
 };
 
 const validateWord = (criteria: string, target: TargetWord, chosenWord: OptionWord) => {
-	console.log(target.semantics);
-	console.log(chosenWord.semantics);
 	return target[criteria] === chosenWord[criteria];
 };
 
@@ -24,7 +22,6 @@ const followedLastCategory = (lastCriteria: string, target: TargetWord, chosenWo
 const followedAnyCategory = (criterias: string[], target: TargetWord, chosenWord: OptionWord) => {
 	return criterias.some((crit) => target[crit] === chosenWord[crit]);
 };
-
 
 // Función de utilidad para pasar una lista de cualquier tipo por el algoritmo de Fisher-Yates
 const shuffleAny = (array: any[]) => {
@@ -62,7 +59,6 @@ const pickTarget = (newWordList: TargetWord[], roundWords: OptionWord[]) => {
 		notSeenWord = assignFont(notSeenWord, roundWords);
 		// ! Esta ⤴️ ! //
 
-		console.log(notSeenWord.font);
 		return { notSeenWord, newWordList };
 	}
 
@@ -85,13 +81,11 @@ const pickTarget = (newWordList: TargetWord[], roundWords: OptionWord[]) => {
 	notSeenWord = assignFont(notSeenWord!, roundWords);
 	// ! Esta ⤴️ ! //
 
-	console.log(notSeenWord.font);
 	return { notSeenWord, newWordList };
 };
 
 const resetWords = (wordList: TargetWord[]) => {
 	wordList.map((word) => {
-		console.log(word.seen);
 		return (word.seen = false);
 	});
 };
