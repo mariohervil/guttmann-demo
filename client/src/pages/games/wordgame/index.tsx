@@ -158,6 +158,9 @@ const WordGame = () => {
 		gameData.rightGuesses++;
 	};
 
+	useEffect(() => {
+		console.log(tempRightAnswers);
+	}, [tempRightAnswers]);
 	/* 
 	Aumenta de ronda y guarda el tiempo de respuesta del usuario
 	también controla el si hay que cambiar el criterio o 
@@ -179,9 +182,6 @@ const WordGame = () => {
 		else if (tempRightAnswers >= gameConfig.maxScorePerCategory) {
 			gameData.passedCategories++;
 			tempRightAnswers = 0;
-
-			console.log(gameData.passedCategories);
-			console.log(criterias.length);
 			if (gameData.passedCategories >= criterias.length) {
 				// si has pasado todas las categorías, empieza a repetir
 				// la lógica de esto es que la longitud de criterias es 3, y el número de categorías pasadas es 3, entonces
@@ -241,7 +241,6 @@ const WordGame = () => {
 	// Cada ronda reinicia el timer y escoge una nueva palabra de la lista
 	useEffect(() => {
 		setRoundTime(gameConfig.maxSecondsPerQuestion);
-		console.log(roundWords);
 		const { newWordList, notSeenWord } = pickTarget(wordList, roundWords);
 		setTarget(notSeenWord);
 		setWordList(newWordList);
