@@ -1,5 +1,5 @@
 import { Request } from 'express';
-import User from '../models/user.model';
+import Patient from '../models/user.model';
 import Account from '../models/account.model';
 
 /**
@@ -10,8 +10,8 @@ import Account from '../models/account.model';
  * the Account model will be returned.
  *
  */
-const userOrAccount = async (request: Request) => {
+const patientOrAccount = async (request: Request) => {
 	const username = request.body.username!;
-	return await Promise.race([User.findOne({ username }), Account.findOne({ username })]);
+	return await Promise.race([Patient.findOne({ username }), Account.findOne({ username })]);
 };
-export default userOrAccount;
+export { patientOrAccount };

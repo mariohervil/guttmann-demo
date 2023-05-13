@@ -1,4 +1,5 @@
-import { model, Schema, Document } from "mongoose";
+import { model, Schema, Document } from 'mongoose';
+import { IGameConfig, gameConfigSchema } from './game-models/gameConfig.model';
 
 // Account model, used by Admins and Doctors.
 export interface IAccount extends Document {
@@ -7,6 +8,7 @@ export interface IAccount extends Document {
 	password: String;
 	firstName: String;
 	lastName: String;
+	gameConfigs: IGameConfig;
 	role: Number;
 }
 
@@ -18,9 +20,10 @@ const Account = new Schema(
 		firstName: String,
 		lastName: String,
 		role: Number,
+		gameConfigs: [gameConfigSchema],
 	},
 	//Shares collection with the "User" model.
-	{ timestamps: false, collection: "users" }
+	{ timestamps: false, collection: 'users' }
 );
 
-export default model<IAccount>("Account", Account);
+export default model<IAccount>('Account', Account);

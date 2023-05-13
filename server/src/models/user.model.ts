@@ -1,7 +1,7 @@
 import { model, Schema, Document } from 'mongoose';
 
 // User model, used by patients only.
-export interface IUser extends Document {
+export interface IPatient extends Document {
 	//? username will be an Email.
 	username: String;
 	password: String;
@@ -11,8 +11,8 @@ export interface IUser extends Document {
 	studies: String;
 	sex: String;
 	role: Number;
-	createdAt: Date;
-	updatedAt: Date;
+	createdAt?: Date;
+	updatedAt?: Date;
 }
 
 const userSchema = new Schema(
@@ -32,4 +32,4 @@ const userSchema = new Schema(
 	{ collection: 'users' }
 );
 
-export default model<IUser>('User', userSchema);
+export default model<IPatient>('Patient', userSchema);

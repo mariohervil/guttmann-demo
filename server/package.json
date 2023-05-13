@@ -12,7 +12,7 @@
     "dev": "nodemon ./src/index.ts"
   },
   "keywords": [],
-  "author": "",
+  "author": "Mario",
   "license": "ISC",
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",

@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import express from 'express';
 import WordGame from '../models/game-models/wordGame.model';
+import Account from '../models/account.model';
 const router = express.Router();
 
 router.post('/game/data', (response: Response, request: Request) => {
@@ -16,9 +17,8 @@ router.post('/game/data', (response: Response, request: Request) => {
 	});
 });
 
-router.post('game/data/config', (request: Request, response: Response) => {
-
-	
-
+router.get('game/data/config', (request: Request, response: Response) => {
+	const user = request?.body?.username;
+	// Account.findOne({ user }, );
 });
 export default router;

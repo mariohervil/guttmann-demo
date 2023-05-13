@@ -1,18 +1,29 @@
 import { model, Schema, Document } from 'mongoose';
-export interface IGameConfig extends Document{
-    categories: Number;
-    maxTries: Number;
-    maxScorePerCategory: Number;
-    wordsPerRound: Number;
-    maxTimePerGame: Number;
-    maxSecondsPerQuestion: Number;
+import { randomUUID } from 'crypto';
+
+interface IGameConfig {
+	id?: String;
+	gameName: String;
+	configName: String;
+	categories: Number;
+	maxTries: Number;
+	maxScorePerCategory: Number;
+	maxTimePerGame: Number;
+	maxSecondsPerQuestion: Number;
 }
-const gameConfigSchema = new Schema({
-    categories: Number,
-    maxTries: Number,
-    maxScorePerCategory: Number,
-    wordsPerRound: Number,
-    maxTimePerGame: Number,
-    maxSecondsPerQuestion: Number,
-});
+
+const gameConfigSchema = new Schema(
+	{
+		id: { type: String, default: randomUUID, unique: true },
+		gameName: String,
+		configName: { type: String, unique: true, required: true },
+		categories: Number,
+		maxTries: Number,
+		maxScorePerCategory: Number,
+		maxTimePerGame: Number,
+		maxSecondsPerQuestion: Number,
+	},
+	{ _id: false }
+);
+export { gameConfigSchema, IGameConfig };
 export default model<IGameConfig>('GameConfig', gameConfigSchema);

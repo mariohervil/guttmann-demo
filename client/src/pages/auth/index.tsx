@@ -1,20 +1,45 @@
 import Head from 'next/head';
-import { useState } from 'react';
-import axios from 'axios';
+import { useState, useEffect } from 'react';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 const Auth = () => {
 	const [username, handleUsername] = useState<String>('');
 	const [password, handlePassword] = useState<String>('');
 	const router = useRouter();
+	const date = new Date();
+	useEffect(() => {
+		axios
+			.get('http://localhost:8080/auth')
+			.then((response: AxiosResponse) => {})
+			.catch((error: AxiosError) => {});
+	}, []);
+
 	const validateForm = async () => {
 		if (username.length >= 0 || password.length >= 0) {
 			try {
-				const response = await axios.post('http://localhost:8080/auth/login/', {
-					username,
-					password,
-				});
-				if (!response?.data?.message) return false;
-				console.log(response.data.message);
+				await axios
+					.post(
+						'http://localhost:8080/auth/login/',
+						{
+							username,
+							password,
+						},
+						{
+							// & Para enviar la cookie de la sesión al servidor.
+							withCredentials: true,
+						}
+					)
+					.then((response: AxiosResponse) => {
+						if (response.status === 200) {
+							console.log(response.data);
+							// Temporal
+							router.push('games/forms');
+						}
+					})
+					.catch((error: any) => {
+						console.log(error.response?.data?.reason);
+					});
 			} catch (error: any) {
 				if (error?.response?.data?.message) {
 					return console.log(
@@ -36,61 +61,55 @@ const Auth = () => {
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
 			<button
+				className="btn btn-primary"
 				onClick={() => {
 					router.push('/games/wordgame');
 				}}
 			>
-				{' '}
-				Ir al juego{' '}
+				Ir al juego
 			</button>
 			<div className="w-full max-w-xs center-screen">
-				<form className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
-					<div className="mb-4">
-						<label className="block text-gray-700 text-sm font-bold mb-2">
-							Username
+				<form className="flex flex-col gap-4 bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+					<div className="form-control w-full max-w-xs">
+						<label className="label">
+							<span className="label-text font-bold">Username</span>
 						</label>
 						<input
 							onChange={(e) => handleUsername(e.target.value)}
-							className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
 							id="text"
 							type="text"
 							placeholder="Username"
+							className="input input-bordered w-full max-w-xs focus:outline-primary focus:border-none"
 						/>
 					</div>
-					<div className="mb-6">
-						<label className="block text-gray-700 text-sm font-bold mb-2">
-							Password
+
+					<div className="form-control w-full max-w-xs">
+						<label className="label">
+							<span className="label-text font-bold">Password</span>
 						</label>
 						<input
 							onChange={(e) => handlePassword(e.target.value)}
-							className="shadow appearance-none border border-red-500 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
 							id="password"
 							type="password"
-							placeholder="******************"
+							placeholder="Password"
+							className="input input-bordered w-full max-w-xs focus:outline-primary focus:border-none"
 						/>
-						<p className="text-red-500 text-xs italic">Please choose a password.</p>
 					</div>
 
-					<div className="flex items-center justify-between">
-						<button
-							className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-							type="button"
-							onClick={() => validateForm()}
-						>
-							Login
-						</button>
-
-						<a
-							className="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800"
-							href="#"
-						>
-							Forgot Password?
-						</a>
+					<div className="flex flex-col gap-4">
+						<div className="flex items-center justify-between mt-4">
+							<button
+								className="btn btn-primary btn-wide"
+								type="button"
+								onClick={() => validateForm()}
+							>
+								Login
+							</button>
+						</div>
 					</div>
 				</form>
-
 				<p className="text-center text-gray-500 text-xs">
-					&copy;2020 Guttmann, all rights reserved.
+					&copy;{date.getFullYear()} Guttmann, all rights reserved.
 				</p>
 			</div>
 		</>

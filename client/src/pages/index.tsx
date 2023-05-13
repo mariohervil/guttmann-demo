@@ -1,17 +1,28 @@
 import Head from 'next/head';
 import { useState, useEffect } from 'react';
-import userState from '../utils/state';
 import { useRouter } from 'next/router';
+import axios, { AxiosResponse } from 'axios';
 
 export default function Home() {
 	const router = useRouter();
-	const auth = userState((state: any) => state.isLogged);
-
+	const [auth, setAuth] = useState();
 	// useEffect(() => {
 	// 	if (!auth) {
 	// 		router.push('/auth');
 	// 	}
 	// }, []);
+
+	useEffect(() => {
+		axios
+			.get('http://localhost:8080/home')
+			.then((response: AxiosResponse) => {
+				console.log('Staying');
+			})
+			.catch((error) => {
+				console.log('Leaving');
+				router.push('/auth');
+			});
+	}, []);
 
 	return (
 		<>
@@ -26,8 +37,7 @@ export default function Home() {
 					router.push('/games/wordgame');
 				}}
 			>
-				{' '}
-				Ir al juego{' '}
+				Ir al juego
 			</button>
 		</>
 	);
