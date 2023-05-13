@@ -39,6 +39,11 @@ npm run dev
 
 Para acceder al juego se puede abrir el cliente como se indica arriba, e introducir la ruta `/games/wordgame`, o bien hacer click en "Ir al juego" en cualquiera de las diferentes ventanas.
 
+Aquí hay una lista de las palabras usadas: 
+[JSON de targets](/client/src/pages/games/wordgame/targetWords.json)
+[JSON de opciones](/client/src/pages/games/wordgame/optionWords.json)
+
+
 ![Captura del juego](/ss.png)
 #
 
