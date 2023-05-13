@@ -2,7 +2,7 @@
   "categories": 3,
   "maxTries": 5,
   "maxScorePerCategory": 8,
-  "wordsPerRound": 4,
   "maxTimePerGame": 300000,
   "maxSecondsPerQuestion": 20000
 }
+

@@ -1,7 +1,7 @@
-import IWord from '../interfaces/Word';
-import wordsJson from '../words.json';
+import { OptionWord, TargetWord } from '../interfaces/Word';
+import wordsJson from '../targetWords.json';
 
-const shuffleArray = (array: IWord[]) => {
+const shuffleWords = (array: TargetWord[]) => {
 	let i = array.length;
 	while (--i > 0) {
 		let temp = Math.floor(Math.random() * (i + 1));
@@ -10,20 +10,24 @@ const shuffleArray = (array: IWord[]) => {
 	return array;
 };
 
-const validateWord = (criteria: string, target: IWord, chosenWord: IWord) => {
+const validateWord = (criteria: string, target: TargetWord, chosenWord: OptionWord) => {
+	console.log(target.semantics);
+	console.log(chosenWord.semantics);
 	return target[criteria] === chosenWord[criteria];
 };
 
-const followedLastCategory = (lastCriteria: string, target: IWord, chosenWord: IWord) => {
+const followedLastCategory = (lastCriteria: string, target: TargetWord, chosenWord: OptionWord) => {
 	if (lastCriteria == '') return false;
 	return target[lastCriteria] === chosenWord[lastCriteria];
 };
 
-const followedAnyCategory = (criterias: string[], target: IWord, chosenWord: IWord) => {
+const followedAnyCategory = (criterias: string[], target: TargetWord, chosenWord: OptionWord) => {
 	return criterias.some((crit) => target[crit] === chosenWord[crit]);
 };
 
-const shuffleAny = (array: string[]) => {
+
+// Función de utilidad para pasar una lista de cualquier tipo por el algoritmo de Fisher-Yates
+const shuffleAny = (array: any[]) => {
 	let i = array.length;
 	while (--i > 0) {
 		let temp = Math.floor(Math.random() * (i + 1));
@@ -32,107 +36,96 @@ const shuffleAny = (array: string[]) => {
 	return array;
 };
 
-const getCriteria = (
-	criteria: string,
-	lastCriteria: string,
-	secondLastCriteria: string
-): string => {
-	return Object.keys(wordsJson.words[0]).filter((crt) => {
-		return !(
-			crt === 'word' ||
-			crt === criteria ||
-			crt === lastCriteria ||
-			crt === secondLastCriteria
-		);
-	})[0];
-};
+/**
+ *
+ * @param newWordList la lista general de palabras, que se va a usar para escoger la palabra diana/target
+ * @param roundWords la lista de las palabras opción
+ * @returns la palabra diana/target y la lista de palabras actualizada con la propiedad "seen" de la palabra diana/target
+ * modificada a true, que indica que esa palabra ya ha sido vista
+ */
+const pickTarget = (newWordList: TargetWord[], roundWords: OptionWord[]) => {
+	// Con esta función, si no hay ninguna palabra que no haya sido vista, se resetea el seen de todas
+	// y se vuelve a buscar una palabra que no haya sido vista
 
-/*
-	Params 
-	función para escoger palabras, tiene validaciones para que siempre 
-	coincidan las palabras diana con al menos dos de las opciones, más la fuente
-	que se añade después de escoger la target, de entre las fuentes de las dos
-	palabras que quedan en las opciones
-	
-	*/
-const pickTargetWords = (pickedWords: IWord[], lastWord: IWord): IWord[] => {
-	const fontsSet = new Set<string>();
+	let notSeenWord = newWordList.find((word) => !word.seen);
 
-	const filteredArray = wordsJson.words.filter((word) => {
-		const isLastWordDifferent = lastWord?.word !== word.word; // Compare with the current word
+	if (notSeenWord) {
+		notSeenWord.seen = true;
 
-		if (isLastWordDifferent) {
-			!pickedWords.some((pickedWord) => {
-				fontsSet.add(pickedWord.font);
-				return pickedWord.word === word.word;
-			});
-		}
+		// ! Opcional ! //
+		// Se asigna la fuente tras escoger la palabra, para que no se repita la fuente
+		// y pueda haber más posibilidades, ej: si golf coincide con equitación en semántica,
+		// y con gel en primera letra, golf no tendrá la fuente de equitación ni de gel,
+		// sino que tendrá la fuente de una de las palabras que no coincidan con golf ni en semántica ni en primera letra,
+		// es decir, las fuentes de cereza o de rana
+		// ! Si se quiere quitar la feature mencionada, eliminar la siguiente línea de código y la de más abajo, que tiene el mismo contenido ! //
+		notSeenWord = assignFont(notSeenWord, roundWords);
+		// ! Esta ⤴️ ! //
 
-		return isLastWordDifferent;
-	});
-
-	const fonts = Array.from(fontsSet);
-	/*
-		Used fonts sirve para guardar las fuentes que tienen las palabras opción
-		y usarlas para escoger la fuente de la palabra target
-		*/
-	const usedFonts = new Set<string>();
-	const result: IWord[] = [];
-
-	for (const word of filteredArray) {
-		let count = 0;
-		usedFonts.clear();
-		for (const pickedWord of pickedWords) {
-			if (
-				word.semantics === pickedWord.semantics ||
-				word.firstLetter === pickedWord.firstLetter
-			) {
-				usedFonts.add(pickedWord.font);
-				count++;
-			}
-			if (count === 2) {
-				word.font = shuffleAny(fonts.filter((font) => !usedFonts.has(font)))[0];
-				result.push(word);
-				break;
-			}
-		}
+		console.log(notSeenWord.font);
+		return { notSeenWord, newWordList };
 	}
-	return result;
+
+	// Si no hay ninguna palabra que no haya sido vista, se resetea el seen de todas,
+	// haciendo que todas sean elegibles de nuevo
+	resetWords(newWordList);
+
+	// Se vuelve a buscar una palabra que no haya sido vista después de resetearlas,
+	// es decir, la primera de la lista
+	notSeenWord = newWordList.find((word) => !word.seen);
+
+	// !-------------------------------------------------------------------------------------!
+	// Pongo el operador de negación aunque sea mala práctica porque sé que siempre
+	// va a haber una palabra que no ha sido vista, porque se acaba de resetear toda la lista
+	// entonces es imposible que todas las palabras hayan sido vistas,
+	// que es la condición para que devuelva undefined
+	notSeenWord!.seen = true;
+
+	// ! Opcional ! //
+	notSeenWord = assignFont(notSeenWord!, roundWords);
+	// ! Esta ⤴️ ! //
+
+	console.log(notSeenWord.font);
+	return { notSeenWord, newWordList };
 };
 
-/*
-	
-	Función algoritmo para seleccionar las palabras de abajo, 
+const resetWords = (wordList: TargetWord[]) => {
+	wordList.map((word) => {
+		console.log(word.seen);
+		return (word.seen = false);
+	});
+};
 
-	*/
-const pickOptionWords = (): IWord[] => {
-	const array: IWord[] = shuffleArray(wordsJson.words);
+const assignFont = (notSeenWord: TargetWord, roundWords: OptionWord[]) => {
+	let fonts = roundWords.map((word) => word.font);
 
-	const semantics: string[] = [];
-	const firstLetters: string[] = [];
-	const fonts: string[] = ['space mono', 'DancingScript', 'times new roman', 'Exo2'];
-
-	const filteredWords = array.filter((word) => {
-		if (semantics.includes(word.semantics) || firstLetters.includes(word.firstLetter)) {
-			return false;
+	const usedFonts: Set<string> = new Set<string>();
+	let availableFonts: string[] = [];
+	roundWords.forEach((roundWord) => {
+		if (
+			notSeenWord!.firstLetter === roundWord.firstLetter ||
+			notSeenWord!.semantics === roundWord.semantics
+		) {
+			usedFonts.add(roundWord.font);
 		}
-		semantics.push(word.semantics);
-		firstLetters.push(word.firstLetter);
-		return true;
+		availableFonts = fonts.filter((font) => !usedFonts.has(font));
 	});
 
-	filteredWords.forEach((word) => {
-		word.font = shuffleAny(fonts).pop()!;
-	});
-	return filteredWords.slice(0, 4);
+	notSeenWord!.font = shuffleAny(availableFonts)[0];
+	return notSeenWord;
+};
+
+// función para recibir un número aleatorio
+const getRandomInt = (max: number) => {
+	return Math.floor(Math.random() * max);
 };
 
 export {
-	shuffleArray,
+	shuffleWords as shuffleArray,
 	validateWord,
 	shuffleAny,
 	followedLastCategory,
 	followedAnyCategory,
-	getCriteria,
-	pickTargetWords,
+	getRandomInt,
+	pickTarget,
 };
